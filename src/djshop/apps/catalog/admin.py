@@ -1,7 +1,7 @@
 from django.contrib import admin
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
-from djshop.apps.catalog.models import Category, ProductClass,Option,ProductAttribute
+from djshop.apps.catalog.models import Category, ProductClass,Option,ProductAttribute, ProductRecommendation
 from django.db.models.aggregates import Count
 
 # Register your models here.
@@ -13,6 +13,11 @@ admin.site.register(Option)
 class ProductAttributeInline(admin.StackedInline):
     model = ProductAttribute
     extra = 2
+
+# class ProductRecommendationInline(admin.StackedInline):
+#     model = ProductRecommendation
+#     extra = 2
+#     # fk_name = 'primary'
 
 class AttributeCounterFilter(admin.SimpleListFilter):
     title = 'Attribute Counter'
