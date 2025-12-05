@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from django.conf import settings
+from django.conf.urls.static import static
 
 admin_urls = [
     path('api/admin/catalog/', include(('djshop.apps.catalog.urls.admin', 'djshop.apps.catalog'), namespace= "catalog-admin"))
@@ -39,6 +41,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ] + front_urls + admin_urls + doc_patterns
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_title = "djshop"
 admin.site.index_title = "djshop"
