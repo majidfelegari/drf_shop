@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'djshop.apps.analytics',
     'djshop.apps.catalog',
     'djshop.apps.media',
+    'djshop.auths.users',
     'djshop.apps.inventory',
 
 ]
@@ -155,3 +156,6 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
+
+
+AUTH_USER_MODEL = "users.User"
