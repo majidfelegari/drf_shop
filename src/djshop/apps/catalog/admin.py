@@ -1,7 +1,7 @@
 from django.contrib import admin
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
-from djshop.apps.catalog.models import Category, ProductClass,Option,ProductAttribute, ProductRecommendation
+from djshop.apps.catalog.models import Category, ProductClass,Option,ProductAttribute, ProductRecommendation, Product, ProductAttributeValue, ProductImage
 from django.db.models.aggregates import Count
 
 # Register your models here.
@@ -14,10 +14,6 @@ class ProductAttributeInline(admin.StackedInline):
     model = ProductAttribute
     extra = 2
 
-# class ProductRecommendationInline(admin.StackedInline):
-#     model = ProductRecommendation
-#     extra = 2
-#     # fk_name = 'primary'
 
 class AttributeCounterFilter(admin.SimpleListFilter):
     title = 'Attribute Counter'
@@ -52,3 +48,27 @@ class ProductClassAdmin(admin.ModelAdmin):
         queryset.update(track_stock=True)
 
 admin.site.register(Category, CategoryAdmin)
+
+
+class ProductRecommendationInline(admin.StackedInline):
+    model = ProductRecommendation
+    extra = 2
+    fk_name = 'primary'
+
+# class ProductCategoryInline(admin.StackedInline):
+#     model = Product.categories.through
+#     extra = 2
+
+class ProductAttributeValueInline(admin.TabularInline):
+    model = ProductAttributeValue
+    extra = 2
+
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 2
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug',)
+    inlines = [ProductAttributeValueInline ,ProductImageInline,ProductRecommendationInline]
+    prepopulated_fields = {"slug": ("title",)}

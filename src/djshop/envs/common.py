@@ -47,8 +47,11 @@ INSTALLED_APPS = [
     'channels',
     
 # internal app
+    'djshop.apps.analytics',
     'djshop.apps.catalog',
     'djshop.apps.media',
+    'djshop.apps.inventory',
+
 ]
 
 MIDDLEWARE = [

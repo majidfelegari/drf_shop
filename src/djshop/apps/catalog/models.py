@@ -2,6 +2,7 @@ from django.db import models
 from treebeard.mp_tree import MP_Node
 from djshop.apps.catalog.managers import CategoryQuerySet
 from djshop.libs.db.fields import UpperCaseCharField
+from djshop.libs.db.models import AuditableModel
 # Create your models here.
 
 
@@ -109,7 +110,7 @@ class Option(models.Model):
         verbose_name_plural = "options"
 
 
-class Product(models.Model):
+class Product(AuditableModel):
     class ProdcutTypeChoice(models.TextChoices):
         standalone = 'standalone'
         parent = 'parent'
@@ -128,6 +129,7 @@ class Product(models.Model):
     attributes = models.ManyToManyField(ProductAttribute, through='ProductAttributeValue')
 
     recommended_products = models.ManyToManyField('catalog.Product', through='ProductRecommendation', blank=True)
+    categories = models.ManyToManyField(Category, related_name='categories')
 
     @property
     def main_image(self):
